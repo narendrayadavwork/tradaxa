@@ -1,0 +1,43 @@
+{% extends 'user_blog/base.html' %}
+{% load static %}
+{% block content %}
+	<style type="text/css">
+		.form-control{
+			background-color: rgb(177, 168, 168);
+		}
+	</style>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<div class="m-4">
+					<form class="m-2 pt-2" method="post" novalidate>
+						<div class="text-white text-center">
+							<h3 class="text-decoration-underline">SignUp Window</h3>
+							{% if messages %}
+								{% for msg in messages %}
+									<p {% if msg.tags %} class="alert alert-{{msg.tags}} mb-5" {% endif %}>{{msg}}</p>
+								{% endfor %}
+							{% endif %}
+						</div>
+						{% csrf_token %}
+						<div class="m-2">
+							{% if form.non_field_errors %}
+							{% for error in form.non_field_errors %}
+								<small class="text-danger">{{error}}</small>
+							{% endfor %}
+						{% endif %}
+						</div>
+						<div class="text-white pt-2">
+							{% for fm in form %}
+								{{fm.label_tag}} {{fm}} <small class="text-danger py-5">{{fm.errors|striptags}}</small><br>
+							{% endfor %}
+						</div>
+						<div class="m-2">
+							<button class="btn btn-success">SignUp</button>
+						</div> 
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>	
+{% endblock content %}

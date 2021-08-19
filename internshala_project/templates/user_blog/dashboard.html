@@ -1,0 +1,56 @@
+{% extends 'user_blog/base.html' %}
+{% load static %}
+	<div class="row text-white">
+		{% block msg %}
+			{% if messages %}
+				{% for msg in messages %}
+				<div class="alert alert-info alert-dismissible fade show my-3 py-3" role="alert">
+					<p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				{% endfor %}
+			{% endif %}
+		{% endblock msg %}
+	</div>
+	{% block content %}
+		<style type="text/css">
+			.form-control{
+				background-color: rgb(177, 168, 168);
+			}
+		</style>	
+		<div class="col-sm-10 mx-5">
+			<h3 class="text-white mx-5 p-2">DashBoard</h3>
+			<a href="{% url 'addpost' %}" class="btn btn-success mx-5">Add Post</a>
+			<h4 class="text-center alert alert-info mt-3 mx-5" style="width: 100%">Show Post Information</h4>
+			{% if posts %}
+				<table class="table table-hover bg-white mx-5">
+					<thead>
+						<tr class="text-center">
+							<th scope="col" style="width: 2%">ID</th>
+							<th scope="col" style="width: 10%">Title</th>
+							<th scope="col" style="width: 45%">Description</th>
+							<th scope="col" style="width: 20%">Action</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						{% for post in posts %}
+						<tr>
+							<td scope="row">{{post.id}}</td>
+							<td>{{post.title}}</td>
+							<td>{{post.body}}</td>
+							<td class="text-center">
+								<a href="{% url 'updatepost' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+								<form method="post" action="{% url 'deletepost' post.id %}" class="d-inline">
+									{% csrf_token %}
+									<input type="submit" class="btn btn-danger btn-sm" value="Delete">
+								</form>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>	
+				</table>
+			{% else %}
+				<h4 class="text-center alert-warning">No Records</h4>
+			{% endif %}
+		</div>
+{% endblock content %}

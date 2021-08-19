@@ -1,0 +1,39 @@
+{% extends 'product_temp/base.html' %}
+{% load static %}
+{% block content %}
+	<div class="container bg-dark">
+		<div class="row">
+			<div class="col-sm-11">
+				<table class="table table-hover mx-5 text-white text-center">
+					<thead>
+						<tr>
+							<td scope="col">#</td>
+							<th scope="col">Name</th>
+							<th scope="col">Weight</th>
+							<th scope="col">Price</th>
+							<th scope="col">Created</th>
+							<th scope="col">Updated</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for prod in prods %}
+						<tr>
+							<th scope="row">{{prod.id}}</th>
+							<td>{{prod.name}}</td>
+							<td>{{prod.weight}}</td>
+							<td>{{prod.price}}</td>
+							<td>{{prod.created_at}}</td>
+							<td>{{prod.updated_at}}</td>
+							<td>
+								<a href="{% url 'updateproduct' prod.id %}">Update</a> | 
+								<a href="{% url 'deleteproduct' prod.id %}">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
